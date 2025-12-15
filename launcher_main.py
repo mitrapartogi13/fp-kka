@@ -1,27 +1,20 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 """
 Main launcher script - wrapper for easy access from root directory
 Run this from the project root to launch the Pacman AI Controller GUI
-
-Usage:
-    python launcher.py
 """
 
 import sys
 import os
 
-# Add folders to Python path so imports work correctly
+# Add folders to Python path
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(project_root, 'ui'))
 sys.path.insert(0, os.path.join(project_root, 'core_game'))
 sys.path.insert(0, os.path.join(project_root, 'search_ai'))
 
-# Now run the actual launcher
+# Import and run the launcher from ui folder
+from ui import launcher
+
 if __name__ == '__main__':
-    # Change directory so relative imports work
-    os.chdir(project_root)
-    
-    # Execute the launcher module directly
-    import runpy
-    launcher_path = os.path.join(project_root, 'ui', 'launcher.py')
-    runpy.run_path(launcher_path, run_name='__main__')
+    launcher.main()
