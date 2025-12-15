@@ -13,12 +13,17 @@
 
 
 # imports from python standard library
-import grading
 import importlib.util
 import optparse
 import os
 import re
 import sys
+
+# Add parent directory and docs directory to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'docs'))
+
+import grading
 import projectParams
 import random
 random.seed(0)

@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-STUDENT_CODE_DEFAULT = 'searchAgents.py,search.py'
-PROJECT_TEST_CLASSES = 'searchTestClasses.py'
+STUDENT_CODE_DEFAULT = 'search_ai/searchAgents.py,search_ai/search.py'
+PROJECT_TEST_CLASSES = 'testing/searchTestClasses.py'
 PROJECT_NAME = 'Project 1: Search'
 BONUS_PIC = False

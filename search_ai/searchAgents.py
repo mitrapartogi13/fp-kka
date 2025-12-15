@@ -478,20 +478,58 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     if len(foodList) == 0:
         return 0
 
-    # Kita tetap mencari Max Maze Distance dari semua makanan yang ada.
-    # Kali ini TANPA BREAK/PRUNING agar konsisten.
+    # Solusi Menggunakan Minimum Spanning Tree (MST)
+    # Heuristik ini konsisten dan cepat (menggunakan Manhattan Distance, bukan BFS).
+    # H(n) = (Cost MST dari semua sisa makanan) + (Jarak Manhattan ke makanan terdekat)
     
-    max_distance = 0
+    # Fungsi helper lokal untuk jarak Manhattan
+    def manhattan(p1, p2):
+        return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+
+    # 1. Hitung Jarak ke Makanan Terdekat (dari posisi Pacman saat ini)
+    min_dist_to_food = min(manhattan(position, food) for food in foodList)
+
+    # 2. Hitung Cost MST dari sisa makanan (menggunakan Algoritma Prim)
+    # Kita membangun graph di mana node adalah makanan, dan edge adalah jarak Manhattan antar makanan.
     
-    for food in foodList:
-        # Hitung jarak asli (Maze Distance) untuk SETIAP makanan.
-        # Memang agak lebih berat, tapi ini satu-satunya cara agar 100% Consistent.
-        dist = mazeDistance(position, food, problem.startingGameState)
+    unvisited = set(foodList)
+    start_node = foodList[0] # Mulai dari makanan pertama
+    unvisited.remove(start_node)
+    
+    mst_cost = 0
+    current_node = start_node
+    
+    # Inisialisasi jarak terpendek dari tree ke setiap node unvisited
+    # Awalnya adalah jarak dari start_node ke node tersebut
+    keys = {food: manhattan(current_node, food) for food in unvisited}
+    
+    while unvisited:
+        # Cari node unvisited dengan jarak terpendek ke tree yang sudah terbentuk
+        best_node = None
+        min_val = float('inf')
         
-        if dist > max_distance:
-            max_distance = dist
-            
-    return max_distance
+        for food in unvisited:
+            val = keys[food]
+            if val < min_val:
+                min_val = val
+                best_node = food
+        
+        if best_node is None:
+            break
+
+        # Tambahkan node tersebut ke tree
+        mst_cost += min_val
+        unvisited.remove(best_node)
+        current_node = best_node
+        
+        # Update jarak terpendek untuk node yang masih unvisited
+        # (karena kita sekarang punya current_node baru di tree yang mungkin lebih dekat)
+        for food in unvisited:
+            dist = manhattan(current_node, food)
+            if dist < keys[food]:
+                keys[food] = dist
+
+    return mst_cost + min_dist_to_food
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"

@@ -19,7 +19,13 @@ import time
 import json
 import traceback
 from collections import defaultdict
-import util
+import sys
+import os
+
+# Add parent directory to path to import core_game
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from core_game import util
 
 class Grades:
   "A data structure for project grades, along with formatting code to display them"
