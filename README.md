@@ -316,59 +316,6 @@ python pacman.py -p SearchAgent -a fn=aStarSearch,heuristic=manhattanHeuristic -
 
 ---
 
-## 🧪 Menjalankan Tes
-
-### Menjalankan Semua Test Cases
-```bash
-python autograder.py
-```
-
-### Menjalankan Test untuk Question Tertentu
-```bash
-python autograder.py -q q1
-python autograder.py -q q2
-python autograder.py -q q3
-python autograder.py -q q4
-```
-
-### Menjalankan Test Spesifik
-```bash
-python autograder.py -q q1 -t test_name
-```
-
-### Verbose Mode (Lihat Detail)
-```bash
-python autograder.py -q q1 -v
-```
-
----
-
-## 📊 Struktur Test Cases
-
-Test cases tersimpan di direktori `test_cases/` dengan struktur:
-
-```
-test_cases/
-├── q1/                    # Question 1 - DFS Implementation
-├── q2/                    # Question 2 - BFS Implementation
-├── q3/                    # Question 3 - UCS Implementation
-├── q4/                    # Question 4 - A* Search Implementation
-├── q5/                    # Question 5 - Heuristics (Bonus)
-├── q6/                    # Question 6 - Minimax (Opsional)
-├── q7/                    # Question 7 - Alpha-Beta Pruning (Opsional)
-├── q8/                    # Question 8 - Expectimax (Opsional)
-└── CONFIG                 # Konfigurasi global test
-```
-
-**Fokus Kelompok:** Q1-Q4 (DFS, BFS, UCS, A*)
-
-Setiap question memiliki:
-- `*.test` - File test case dengan input
-- `*.solution` - File solusi expected output
-- `CONFIG` - Konfigurasi untuk question tersebut
-
----
-
 ## 🎯 Pembelajaran Utama
 
 Melalui proyek ini, kami mempelajari:
