@@ -1,4 +1,4 @@
-# FP Konsep Kecerdasan Artifisial - Final Praktikum Konsep Kecerdasan Artifisial
+# FP KKA - Final Project Konsep Kecerdasan Artifisial
 
 > Implementasi 4 algoritma pencarian (DFS, BFS, UCS, A*) untuk permainan Pacman
 
