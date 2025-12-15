@@ -195,53 +195,43 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
-def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    
-    # A* menggunakan PriorityQueue seperti UCS
+def aStarSearch(problem, heuristic=nullHeuristic):
+    """Search the node that has the lowest combined cost and heuristic first.
+
+    Standard A* implementation using the project's PriorityQueue from util.py.
+    The priority of each fringe item is f(n) = g(n) + h(n), where g(n) is the
+    path cost from the start to n, and h(n) is the heuristic estimate from n
+    to the goal.
+    """
+
     from util import PriorityQueue
+
+    start = problem.getStartState()
     fringe = PriorityQueue()
+    # Each item: (state, actions_so_far, g_cost)
+    fringe.push((start, [], 0), heuristic(start, problem))
 
-    start_state = problem.getStartState()
-    
-    # Biaya g(n) awal adalah 0
-    start_g = 0
-    # Biaya h(n) dihitung menggunakan fungsi heuristic
-    start_h = heuristic(start_state, problem)
-    # Total prioritas f(n) = g(n) + h(n)
-    start_priority = start_g + start_h
-
-    # Kita menyimpan (state, actions, g_cost) dalam item
-    # Priority-nya adalah f_cost
-    fringe.push((start_state, [], start_g), start_priority)
-
-    visited = set()
+    # Track best known g-cost for each visited state to avoid re-expanding with higher cost
+    best_g = {}
 
     while not fringe.isEmpty():
-        # Pop node dengan f(n) terendah
-        current_state, actions, current_g = fringe.pop()
+        state, actions, g_cost = fringe.pop()
 
-        if problem.isGoalState(current_state):
+        # If we've already seen a cheaper path to this state, skip it
+        if state in best_g and best_g[state] <= g_cost:
+            continue
+
+        best_g[state] = g_cost
+
+        if problem.isGoalState(state):
             return actions
 
-        if current_state not in visited:
-            visited.add(current_state)
+        for successor, action, step_cost in problem.getSuccessors(state):
+            new_g = g_cost + step_cost
+            f = new_g + heuristic(successor, problem)
+            fringe.push((successor, actions + [action], new_g), f)
 
-            successors = problem.getSuccessors(current_state)
-            for next_state, action, step_cost in successors:
-                if next_state not in visited:
-                    # Update g(n): Biaya sejauh ini + biaya langkah baru
-                    new_g = current_g + step_cost
-                    
-                    # Hitung h(n): Estimasi sisa jarak ke tujuan
-                    new_h = heuristic(next_state, problem)
-                    
-                    # Hitung f(n) = g(n) + h(n) untuk prioritas antrean
-                    new_f = new_g + new_h
-                    
-                    new_actions = actions + [action]
-                    fringe.push((next_state, new_actions, new_g), new_f)
-
+    # No solution found
     return []
 
 

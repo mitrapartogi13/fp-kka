@@ -89,9 +89,13 @@ class PacmanLauncher:
         # Map Layout
         ttk.Label(settings_frame, text="Pilih Map:").grid(row=0, column=0, sticky="w", padx=10, pady=5)
         self.layout_options = [
-            "mediumClassic", "originalClassic", "smallClassic", "minimaxClassic", # Map Game Asli
-            "trickySearch", "bigSearch", # Map Puzzle Search
-            "openClassic", "capsuleClassic"
+            # Map Game Asli (Classic)
+            "mediumClassic", "originalClassic", "smallClassic", "minimaxClassic",
+            "openClassic", "capsuleClassic",
+            # Map Search/Pathfinding umum
+            "tinyMaze", "smallMaze", "mediumMaze", "bigMaze",
+            # Map Puzzle Search
+            "trickySearch", "bigSearch"
         ]
         self.map_combo = ttk.Combobox(settings_frame, values=self.layout_options)
         self.map_combo.set("mediumClassic") # Default Classic
@@ -106,17 +110,23 @@ class PacmanLauncher:
         lbl_ghost_hint = tk.Label(settings_frame, text="*AI Project 1 belum bisa melihat hantu (bisa mati)", 
                                  font=("Arial", 7), fg="red")
         lbl_ghost_hint.grid(row=2, column=0, columnspan=2, sticky="w", padx=10)
-        
+
+        # Zoom (setara parameter -z pada CLI)
+        ttk.Label(settings_frame, text="Zoom (setara -z):").grid(row=3, column=0, sticky="w", padx=10, pady=5)
+        self.zoom_scale = tk.Scale(settings_frame, from_=0.3, to=2.0, resolution=0.1, orient="horizontal")
+        self.zoom_scale.set(1.0)
+        self.zoom_scale.grid(row=3, column=1, sticky="we", padx=10, pady=5)
+
         # Scrolling & Auto-Center Option
-        ttk.Label(settings_frame, text="Scrolling (Map Besar):").grid(row=3, column=0, sticky="w", padx=10, pady=5)
+        ttk.Label(settings_frame, text="Scrolling (Map Besar):").grid(row=4, column=0, sticky="w", padx=10, pady=5)
         self.scrolling_var = tk.BooleanVar(value=True)  # Default enabled
         scrolling_check = ttk.Checkbutton(settings_frame, text="Auto-Center mengikuti Pacman", 
-                                         variable=self.scrolling_var)
-        scrolling_check.grid(row=3, column=1, sticky="w", padx=10, pady=5)
-        
+                         variable=self.scrolling_var)
+        scrolling_check.grid(row=4, column=1, sticky="w", padx=10, pady=5)
+
         lbl_scroll_hint = tk.Label(settings_frame, text="*Aktifkan untuk map besar agar kamera mengikuti Pacman", 
-                                   font=("Arial", 7), fg="blue")
-        lbl_scroll_hint.grid(row=4, column=0, columnspan=2, sticky="w", padx=10)
+                       font=("Arial", 7), fg="blue")
+        lbl_scroll_hint.grid(row=5, column=0, columnspan=2, sticky="w", padx=10)
 
         # --- Start Button ---
         btn_frame = tk.Frame(root)
@@ -189,7 +199,7 @@ class PacmanLauncher:
                 auto_center = True
                 print(f"Map besar terdeteksi ({map_width}x{map_height}). Scrolling aktif dengan viewport 800x600.")
         
-        display = graphicsDisplay.PacmanGraphics(zoom=1.0, frameTime=0.1,
+        display = graphicsDisplay.PacmanGraphics(zoom=self.zoom_scale.get(), frameTime=0.1,
                                                 viewport_width=viewport_width,
                                                 viewport_height=viewport_height,
                                                 auto_center=auto_center)
