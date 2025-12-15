@@ -527,6 +527,7 @@ class ClosestDotSearchAgent(SearchAgent):
         # dengan langkah paling sedikit (shortest path to NEAREST goal)
         return search.bfs(problem)
 
+
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
     A search problem for finding a path to any food.
