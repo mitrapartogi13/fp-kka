@@ -1,8 +1,14 @@
-# FPKKA - Final Praktikum Konsep Kecerdasan Artifisial
+# FP Konsep Kecerdasan Artifisial - Final Praktikum Konsep Kecerdasan Artifisial
 
-> Implementasi algoritma pencarian dan agen AI untuk permainan Pacman
+> Implementasi 4 algoritma pencarian (DFS, BFS, UCS, A*) untuk permainan Pacman
 
 **Version:** v1.004
+
+**Kelas: KKA C**
+**Kelompok:** 
+- Mitra Partogi (5025241017)
+- Dimas Setiaji (5025241056)
+- Indra Wahyu Tirtayasa (5025241108)
 
 ---
 
@@ -22,41 +28,34 @@
 
 ## 🎮 Deskripsi Proyek
 
-FPKKA adalah implementasi dari proyek Pacman AI dari UC Berkeley yang dirancang untuk mengajarkan konsep fundamental dalam Kecerdasan Buatan (AI). Proyek ini mencakup implementasi berbagai algoritma pencarian dan strategi permainan untuk agen Pacman.
+Final Project ini adalah implementasi dari proyek Pacman AI dari UC Berkeley yang dirancang untuk mengajarkan konsep fundamental dalam Kecerdasan Buatan (AI). Proyek ini mencakup implementasi 4 algoritma pencarian utama untuk agen Pacman.
 
-Pacman harus belajar untuk menavigasi labirin, mengumpulkan pelet makanan, dan menghindari hantu menggunakan berbagai teknik AI termasuk:
-- Pencarian mendalam (Depth-First Search)
-- Pencarian meluas (Breadth-First Search)
-- Pencarian seragam biaya (Uniform Cost Search)
-- Pencarian A* dengan heuristik
-- Minimax dan Alpha-Beta Pruning
-- Expectimax Algorithm
+Pacman harus belajar untuk menavigasi labirin dan mengumpulkan pelet makanan menggunakan 4 algoritma pencarian utama:
+- Pencarian mendalam (Depth-First Search / DFS)
+- Pencarian meluas (Breadth-First Search / BFS)
+- Pencarian seragam biaya (Uniform Cost Search / UCS)
+- Pencarian A* dengan heuristik (A* Search)
 
 ---
 
 ## ✨ Fitur Utama
 
-### Algoritma Pencarian
+### Algoritma Pencarian (4 Algoritma Utama)
 - **DFS (Depth-First Search)** - Pencarian mendalam untuk eksplorasi ruang keadaan
 - **BFS (Breadth-First Search)** - Pencarian meluas untuk menemukan solusi terpendek
 - **UCS (Uniform Cost Search)** - Pencarian optimal berdasarkan biaya
 - **A* Search** - Pencarian dengan heuristik untuk efisiensi maksimal
-- **Minimax** - Algoritma permainan adversarial
-- **Alpha-Beta Pruning** - Optimasi minimax dengan pengurangan cabang
 
 ### Agen Permainan
-- **SearchAgent** - Agen yang menggunakan algoritma pencarian
-- **PacmanAgent** - Agen Pacman standar
-- **GhostAgents** - Berbagai strategi agen hantu (random, greedy, intelligent)
-- **KeyboardAgent** - Kontrol manual dengan keyboard
+- **SearchAgent** - Agen yang menggunakan algoritma pencarian (DFS, BFS, UCS, A*)
+- **KeyboardAgent** - Kontrol manual dengan keyboard untuk testing
 
 ### Antarmuka Pengguna
+- **Launcher GUI** - Interface yang user-friendly untuk menjalankan game dengan mudah
 - **Grafis** - Visualisasi permainan real-time
-- **Mode Teks** - Interface berbasis teks untuk testing
-- **Launcher UI** - Interface GUI untuk menjalankan eksperimen
+- **Mode Teks** - Interface berbasis teks untuk testing cepat
 
 ### Fitur Tambahan
-- **Scrolling Layout** - Dukungan untuk labirin berukuran besar
 - **Multiple Mazes** - 30+ labirin dengan tingkat kesulitan berbeda
 - **Autograder** - Sistem penilaian otomatis untuk validasi solusi
 
@@ -100,13 +99,32 @@ Tidak perlu instalasi dependencies tambahan karena proyek hanya menggunakan libr
 
 ## 📖 Cara Penggunaan
 
-### Menjalankan Game Standar
+### ⭐ Cara Mudah - Menggunakan Launcher GUI (Rekomendasi)
+```bash
+python launcher.py
+```
+
+Aplikasi GUI akan membuka dengan antarmuka yang user-friendly untuk memilih:
+1. **Siapa yang main?** - Pilih antara manual (keyboard) atau AI Agents
+2. **Pilih Otak AI (Algoritma)** - Pilih salah satu dari:
+   - DFS (Depth-First Search)
+   - BFS (Breadth-First Search)
+   - UCS (Uniform Cost Search)
+   - A* (dengan Manhattan Heuristic)
+3. **Pengaturan Map** - Pilih layout labirin dan jumlah hantu
+4. **Scrolling** - Opsi untuk auto-center pada map besar
+
+Kemudian klik tombol **MULAI GAME** untuk menjalankan game dengan konfigurasi yang dipilih.
+
+### Menjalankan Game Standar (Manual)
 ```bash
 python pacman.py
 ```
 Gunakan tombol arrow atau `W`, `A`, `S`, `D` untuk bergerak.
 
-### Menjalankan dengan SearchAgent
+### Menjalankan dengan SearchAgent via Command Line
+Jika ingin menjalankan langsung via command line tanpa GUI:
+
 ```bash
 # Depth-First Search
 python pacman.py -p SearchAgent -a fn=depthFirstSearch
@@ -121,7 +139,7 @@ python pacman.py -p SearchAgent -a fn=uniformCostSearch
 python pacman.py -p SearchAgent -a fn=aStarSearch,heuristic=manhattanHeuristic
 ```
 
-### Memilih Layout/Labirin
+### Memilih Layout/Labirin (Command Line)
 ```bash
 python pacman.py -l tinyMaze
 python pacman.py -l smallMaze
@@ -129,20 +147,17 @@ python pacman.py -l mediumMaze
 python pacman.py -l bigMaze
 ```
 
-### Menjalankan dengan Hantu
-```bash
-python pacman.py -p SearchAgent -a fn=depthFirstSearch -l smallMaze -g GhostAgent
-```
-
 ### Opsi Command Line Penting
 | Opsi | Deskripsi |
 |------|-----------|
-| `-p AGENT_TYPE` | Tipe agen Pacman |
+| `-p AGENT_TYPE` | Tipe agen Pacman (SearchAgent) |
 | `-l LAYOUT` | File layout labirin (di folder `layouts/`) |
-| `-g GHOST_TYPE` | Tipe agen hantu |
-| `-a PARAMS` | Parameter untuk agen |
+| `-a PARAMS` | Parameter untuk agen (fn=algorithm,heuristic=heuristic) |
 | `-n NUM` | Jumlah game untuk dijalankan |
 | `-q` | Quiet mode (tanpa graphics) |
+| `-t` | Text mode (display berbasis teks) |
+
+**⭐ Rekomendasi:** Gunakan `python launcher.py` untuk cara yang paling mudah!
 
 ---
 
@@ -157,9 +172,8 @@ FPKKA/
 │   └── util.py                # Utility functions
 │
 ├── Search & AI
-│   ├── search.py              # Implementasi algoritma pencarian
+│   ├── search.py              # Implementasi algoritma pencarian (DFS, BFS, UCS, A*)
 │   ├── searchAgents.py        # Agen yang menggunakan pencarian
-│   ├── ghostAgents.py         # Implementasi agen hantu
 │   ├── pacmanAgents.py        # Agen Pacman lainnya
 │   ├── keyboardAgents.py      # Agen kontrol keyboard
 │   └── eightpuzzle.py         # Problem 8-puzzle untuk testing
@@ -168,8 +182,8 @@ FPKKA/
 │   ├── graphicsDisplay.py     # Rendering grafis
 │   ├── graphicsUtils.py       # Utility grafis
 │   ├── textDisplay.py         # Display berbasis teks
-│   ├── pacman_ui.py           # UI utilities
-│   └── launcher.py            # GUI launcher
+│   ├── launcher.py            # GUI Launcher (main entry point)
+│   └── pacman_ui.py           # UI utilities
 │
 ├── Testing & Grading
 │   ├── autograder.py          # Sistem grading otomatis
@@ -177,7 +191,6 @@ FPKKA/
 │   ├── searchTestClasses.py   # Test cases untuk search
 │   ├── testClasses.py         # Test classes umum
 │   ├── testParser.py          # Parser untuk test files
-│   ├── test_*.py              # Various test scripts
 │   └── test_cases/            # Direktori berisi test cases
 │       ├── q1/ - q8/          # Questions/problems per bagian
 │       └── CONFIG             # Konfigurasi test
@@ -190,63 +203,115 @@ FPKKA/
 │   │   └── ... (30+ layouts)
 │   └── __pycache__/           # Python cache
 │
-├── Documentation & Configuration
-│   ├── README.md              # File ini
-│   ├── VERSION                # Versi proyek (v1.004)
-│   ├── projectParams.py       # Parameter proyek
-│   ├── SCROLLING_FEATURE.md   # Dokumentasi fitur scrolling
-│   ├── VERIFICATION.py        # Verifikasi proyek
-│   └── check_map_sizes.py     # Checker ukuran map
-
+└── Documentation & Configuration
+    ├── README.md              # File ini
+    ├── VERSION                # Versi proyek (v1.004)
+    ├── projectParams.py       # Parameter proyek
+    └── SCROLLING_FEATURE.md   # Dokumentasi fitur scrolling
 ```
 
 ---
 
-## 🔍 Algoritma Pencarian
+## 🔍 Algoritma Pencarian (4 Algoritma Kelompok)
 
 ### 1. Depth-First Search (DFS)
-- Menggunakan **stack** untuk penyimpanan state
-- Cocok untuk labirin yang dalam
-- Fungsi: `search.depthFirstSearch(problem)`
+**Deskripsi:**
+- Algoritma pencarian yang menggunakan **stack** (Last-In-First-Out) untuk menyimpan state
+- Mengeksplorasi setiap cabang sejauh mungkin sebelum backtrack
+- Cocok untuk labirin yang dalam dengan memori terbatas
+
+**Karakteristik:**
+- Completeness: Ya (untuk finite graphs)
+- Optimality: Tidak menjamin solusi optimal
+- Time Complexity: O(b^d) di mana b adalah branching factor dan d adalah kedalaman
+- Space Complexity: O(bd) - lebih efisien dari BFS
 
 ### 2. Breadth-First Search (BFS)
-- Menggunakan **queue** untuk penyimpanan state
-- Menjamin solusi terpendek (dalam jumlah langkah)
-- Fungsi: `search.breadthFirstSearch(problem)`
+**Deskripsi:**
+- Algoritma pencarian yang menggunakan **queue** (First-In-First-Out) untuk menyimpan state
+- Mengeksplorasi semua state pada level kedalaman n sebelum mengeksplorasi level n+1
+- Menjamin menemukan solusi terpendek (dalam jumlah langkah)
+
+**Karakteristik:**
+- Completeness: Ya (untuk finite graphs)
+- Optimality: Ya (untuk uniform cost)
+- Time Complexity: O(b^d) - dapat membesar dengan cepat
+- Space Complexity: O(b^d) - membutuhkan lebih banyak memori
 
 ### 3. Uniform Cost Search (UCS)
-- Menggunakan **priority queue** berdasarkan cost
-- Menjamin solusi dengan cost terendah
-- Fungsi: `search.uniformCostSearch(problem)`
+**Deskripsi:**
+- Algoritma pencarian yang menggunakan **priority queue** berdasarkan cost kumulatif
+- Mengeksplorasi state dengan cost terendah terlebih dahulu
+- Menjamin solusi dengan cost total terendah (path cost)
+
+**Karakteristik:**
+- Completeness: Ya (untuk finite graphs dengan biaya positif)
+- Optimality: Ya (menjamin cost minimal)
+- Time Complexity: O(b^(1+⌊C*/ε⌋)) di mana C* adalah cost solusi optimal
+- Space Complexity: Sama dengan time complexity
 
 ### 4. A* Search
-- Menggabungkan UCS dengan heuristik
-- Formula: `f(n) = g(n) + h(n)`
-  - `g(n)` = actual cost dari start ke node n
-  - `h(n)` = estimated cost dari n ke goal
-- Fungsi: `search.aStarSearch(problem, heuristic)`
+**Deskripsi:**
+- Algoritma pencarian yang menggabungkan **actual cost** (dari UCS) dengan **heuristik estimate**
+- Menggunakan fungsi evaluasi: `f(n) = g(n) + h(n)`
+  - `g(n)` = actual cost dari start node ke current node
+  - `h(n)` = estimated cost dari current node ke goal node
+- Optimal dan lebih efisien dari UCS jika heuristik admissible
 
-### Heuristik yang Tersedia
-- **nullHeuristic** - Heuristik trivial (h=0)
-- **manhattanHeuristic** - Manhattan distance
-- **euclideanHeuristic** - Euclidean distance
+**Karakteristik:**
+- Completeness: Ya
+- Optimality: Ya (jika heuristik admissible dan consistent)
+- Time Complexity: Tergantung pada kualitas heuristik
+- Space Complexity: Tergantung pada kualitas heuristik
+
+**Heuristik yang Digunakan:**
+- **manhattanHeuristic** - Jarak Manhattan: |x1-x2| + |y1-y2|
+  - Cocok untuk grid dengan movement ke 4 arah (up, down, left, right)
+
+---
+
+## 📊 Perbandingan Algoritma
+
+| Aspek | DFS | BFS | UCS | A* |
+|-------|-----|-----|-----|-----|
+| **Data Structure** | Stack | Queue | Priority Queue | Priority Queue |
+| **Completeness** | ✓ | ✓ | ✓ | ✓ |
+| **Optimality** | ✗ | ✓* | ✓ | ✓** |
+| **Space** | O(bd) | O(b^d) | O(b^d) | O(b^d) |
+| **Time** | O(b^d) | O(b^d) | O(b^(1+C*/ε)) | Tergantung h |
+| **Praktis** | Cepat tapi tidak optimal | Optimal untuk cost uniform | Optimal dengan cost variabel | Optimal dan cepat |
+
+*Optimal untuk uniform cost  
+**Optimal jika heuristik admissible
 
 ---
 
 ## 🤖 Agen AI
 
 ### SearchAgent
-Agen yang menggunakan algoritma pencarian untuk menemukan path menuju goal.
+Agen yang menggunakan salah satu dari 4 algoritma pencarian untuk menemukan path menuju goal secara otomatis.
 
+**Menggunakan Launcher GUI (Rekomendasi):**
+1. Jalankan `python launcher.py`
+2. Pilih "Komputer (AI Agents)" pada opsi "Siapa yang main?"
+3. Pilih salah satu algoritma: DFS, BFS, UCS, atau A*
+4. Pilih map dan setting lainnya
+5. Klik "MULAI GAME"
+
+**Atau via Command Line:**
 ```bash
-python pacman.py -p SearchAgent -a fn=aStarSearch,heuristic=manhattanHeuristic
-```
+# DFS
+python pacman.py -p SearchAgent -a fn=depthFirstSearch -l tinyMaze
 
-### Ghost Agents
-Berbagai implementasi agen hantu:
-- **RandomGhost** - Bergerak secara acak
-- **DirectionalGhost** - Bergerak ke arah tertentu
-- **SmartGhost** - Menggunakan strategi pintar untuk mengejar Pacman
+# BFS
+python pacman.py -p SearchAgent -a fn=breadthFirstSearch -l tinyMaze
+
+# UCS
+python pacman.py -p SearchAgent -a fn=uniformCostSearch -l tinyMaze
+
+# A* dengan Manhattan Heuristic
+python pacman.py -p SearchAgent -a fn=aStarSearch,heuristic=manhattanHeuristic -l tinyMaze
+```
 
 ---
 
@@ -261,6 +326,8 @@ python autograder.py
 ```bash
 python autograder.py -q q1
 python autograder.py -q q2
+python autograder.py -q q3
+python autograder.py -q q4
 ```
 
 ### Menjalankan Test Spesifik
@@ -273,22 +340,6 @@ python autograder.py -q q1 -t test_name
 python autograder.py -q q1 -v
 ```
 
-### Test Manual untuk Launcher
-```bash
-python test_launcher_manual.py
-python test_ui_launcher.py
-```
-
-### Test Scrolling Feature
-```bash
-python test_scrolling.py
-```
-
-### Check Map Sizes
-```bash
-python check_map_sizes.py
-```
-
 ---
 
 ## 📊 Struktur Test Cases
@@ -297,17 +348,18 @@ Test cases tersimpan di direktori `test_cases/` dengan struktur:
 
 ```
 test_cases/
-├── q1/                    # Question 1 - Basic Search
-├── q2/                    # Question 2 - DFS/BFS Implementation
-├── q3/                    # Question 3 - UCS
-├── q4/                    # Question 4 - A* Search
-├── q5/                    # Question 5 - Heuristics
-├── q6/                    # Question 6 - Minimax
-├── q7/                    # Question 7 - Alpha-Beta Pruning
-├── q8/                    # Question 8 - Expectimax
+├── q1/                    # Question 1 - DFS Implementation
+├── q2/                    # Question 2 - BFS Implementation
+├── q3/                    # Question 3 - UCS Implementation
+├── q4/                    # Question 4 - A* Search Implementation
+├── q5/                    # Question 5 - Heuristics (Bonus)
+├── q6/                    # Question 6 - Minimax (Opsional)
+├── q7/                    # Question 7 - Alpha-Beta Pruning (Opsional)
+├── q8/                    # Question 8 - Expectimax (Opsional)
 └── CONFIG                 # Konfigurasi global test
-
 ```
+
+**Fokus Kelompok:** Q1-Q4 (DFS, BFS, UCS, A*)
 
 Setiap question memiliki:
 - `*.test` - File test case dengan input
@@ -318,15 +370,18 @@ Setiap question memiliki:
 
 ## 🎯 Pembelajaran Utama
 
-Melalui proyek ini, Anda akan mempelajari:
+Melalui proyek ini, kami mempelajari:
 
-1. **Representasi Masalah** - Bagaimana merepresentasikan problem sebagai search space
-2. **Algoritma Pencarian Uninformed** - DFS, BFS, UCS
-3. **Algoritma Pencarian Informed** - A* dengan berbagai heuristik
-4. **Adversarial Search** - Minimax, Alpha-Beta Pruning
-5. **Expectimax** - Keputusan di bawah uncertainty
-6. **Design Patterns** - Inheritance, abstraction, dan object-oriented design
-7. **Performance Analysis** - Evaluasi efisiensi algoritma
+1. **Representasi Masalah** - Bagaimana merepresentasikan maze sebagai search space
+2. **Algoritma Pencarian Uninformed** 
+   - DFS (Depth-First Search) - Pencarian mendalam
+   - BFS (Breadth-First Search) - Pencarian meluas
+   - UCS (Uniform Cost Search) - Pencarian berdasarkan biaya
+3. **Algoritma Pencarian Informed** 
+   - A* Search - Pencarian dengan heuristik Manhattan
+4. **Heuristik dan Admissibility** - Evaluasi dan pemilihan fungsi heuristik yang tepat
+5. **Design Patterns** - Inheritance, abstraction, dan object-oriented design
+6. **Performance Analysis** - Evaluasi efisiensi algoritma dalam hal waktu dan memori
 
 ---
 
