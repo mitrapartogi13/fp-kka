@@ -265,7 +265,7 @@ class PacmanGraphics:
         begin_graphics(screen_width,
                        screen_height,
                        BACKGROUND_COLOR,
-                       "CS188 Pacman",
+                       "IF-C28 Pacman",
                        viewport_width=self.viewport_width,
                        viewport_height=self.viewport_height,
                        auto_center=self.auto_center)
