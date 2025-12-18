@@ -270,24 +270,44 @@ class PacmanGraphics:
                        viewport_height=self.viewport_height,
                        auto_center=self.auto_center)
 
+    # --- GANTI ISI FUNGSI INI DI graphicsDisplay.py ---
     def drawPacman(self, pacman, index):
+        """
+        KODE BARU: Menggambar karakter menggunakan gambar (sprite) kucing.
+        """
+        # Mendapatkan posisi pacman di grid
         position = self.getPosition(pacman)
+        # Mengubah posisi grid menjadi koordinat layar pixel
         screen_point = self.to_screen(position)
-        endpoints = self.getEndpoints(self.getDirection(pacman))
+        # Mendapatkan arah gerak pacman saat ini
+        direction = self.getDirection(pacman)
 
-        width = PACMAN_OUTLINE_WIDTH
-        outlineColor = PACMAN_COLOR
-        fillColor = PACMAN_COLOR
+        # --- LOGIKA ANIMASI SEDERHANA ---
+        # Kita menggunakan 'self.frame' sebagai penghitung waktu internal game.
+        # (self.frame % 6) < 3 artinya: 3 frame gambar A, 3 frame gambar B.
+        # Ubah angka 6 untuk mempercepat/memperlambat animasi mengunyah.
+        is_eating_anim_frame = (self.frame % 6) < 3
 
-        if self.capture:
-            outlineColor = TEAM_COLORS[index % 2]
-            fillColor = GHOST_COLORS[index]
-            width = PACMAN_CAPTURE_OUTLINE_WIDTH
+        # Tentukan nama file gambar yang akan dipakai
+        gambar_yang_dipakai = "kucing_biasa.png" # Default (saat diam)
 
-        return [circle(screen_point, PACMAN_SCALE * self.gridSize,
-                       fillColor = fillColor, outlineColor = outlineColor,
-                       endpoints = endpoints,
-                       width = width)]
+        # Jika Pacman sedang bergerak (tidak STOP)
+        if direction != Directions.STOP:
+            if is_eating_anim_frame:
+                # Gunakan gambar mulut terbuka
+                gambar_yang_dipakai = "cat2.png"
+            else:
+                # Gunakan gambar mulut tertutup
+                gambar_yang_dipakai = "cat1.png"
+        
+        try:
+            # Mengembalikan objek gambar yang dibuat di kanvas
+            return [image(screen_point, file=gambar_yang_dipakai)]
+        except Exception as e:
+            print(f"Error memuat gambar: {e}")
+            print("Pastikan file 'kucing_biasa.png' dan 'kucing_makan.png' ada di folder proyek.")
+            # Fallback darurat jika gambar gagal dimuat (kembali jadi lingkaran merah kecil)
+            return [circle(screen_point, 0.5 * self.gridSize, fillColor='red', outlineColor='red', width=1)]
 
     def getEndpoints(self, direction, position=(0,0)):
         x, y = position
